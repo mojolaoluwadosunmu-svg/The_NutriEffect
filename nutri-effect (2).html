@@ -1,0 +1,1659 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Nutri Effect — AI-Powered Wellness Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary-blue: #005B96;
+    --primary-green: #4CAF50;
+    --accent-teal: #00A896;
+    --bg: #F5F5F5;
+    --surface: #FFFFFF;
+    --surface-2: #EEF7EE;
+    --text-primary: #1A2E1A;
+    --text-secondary: #4A5E4A;
+    --text-muted: #7A8E7A;
+    --border: rgba(0,91,150,0.1);
+    --shadow: 0 4px 24px rgba(0,91,150,0.07);
+    --shadow-lg: 0 12px 48px rgba(0,91,150,0.12);
+    --alert-yellow: #FFC107;
+    --alert-red: #D32F2F;
+    --info-blue: #1976D2;
+    --radius: 16px;
+    --radius-sm: 10px;
+    --radius-lg: 24px;
+    --nav-h: 72px;
+  }
+  [data-theme="dark"] {
+    --bg: #0D1B0D;
+    --surface: #162416;
+    --surface-2: #1E311E;
+    --text-primary: #E8F5E9;
+    --text-secondary: #A5C8A7;
+    --text-muted: #6B8E6D;
+    --border: rgba(76,175,80,0.12);
+    --shadow: 0 4px 24px rgba(0,0,0,0.3);
+    --shadow-lg: 0 12px 48px rgba(0,0,0,0.4);
+    --primary-blue: #4DA6E8;
+    --primary-green: #66BB6A;
+    --accent-teal: #26C6B8;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+    transition: background 0.3s, color 0.3s;
+    overflow-x: hidden;
+  }
+
+  /* ---- NAV ---- */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    height: var(--nav-h);
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center;
+    padding: 0 clamp(1rem, 4vw, 3rem);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .nav-inner {
+    max-width: 1280px; width: 100%;
+    margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  }
+  .logo {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+  .logo-icon {
+    width: 38px; height: 38px;
+    background: linear-gradient(135deg, var(--primary-green), var(--accent-teal));
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .logo-text {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.25rem;
+    color: var(--text-primary);
+    line-height: 1.1;
+  }
+  .logo-text span { color: var(--primary-green); }
+  .nav-links {
+    display: flex; align-items: center; gap: clamp(1rem, 2vw, 2rem);
+    list-style: none;
+  }
+  .nav-links a {
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: color 0.2s;
+    white-space: nowrap;
+  }
+  .nav-links a:hover { color: var(--primary-green); }
+  .nav-actions {
+    display: flex; align-items: center; gap: 10px; flex-shrink: 0;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 20px;
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem; font-weight: 600;
+    cursor: pointer; border: none;
+    text-decoration: none;
+    transition: all 0.2s;
+    white-space: nowrap;
+    font-family: inherit;
+  }
+  .btn-outline {
+    background: transparent;
+    border: 1.5px solid var(--border);
+    color: var(--text-primary);
+  }
+  .btn-outline:hover { border-color: var(--primary-green); color: var(--primary-green); }
+  .btn-primary {
+    background: var(--primary-green);
+    color: #fff;
+    box-shadow: 0 2px 12px rgba(76,175,80,0.3);
+  }
+  .btn-primary:hover { background: #43A047; transform: translateY(-1px); box-shadow: 0 4px 20px rgba(76,175,80,0.4); }
+  .btn-blue {
+    background: var(--primary-blue);
+    color: #fff;
+    box-shadow: 0 2px 12px rgba(0,91,150,0.3);
+  }
+  .btn-blue:hover { opacity: 0.9; transform: translateY(-1px); }
+
+  .theme-toggle {
+    width: 38px; height: 38px;
+    border-radius: var(--radius-sm);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .theme-toggle:hover { background: var(--border); }
+
+  .hamburger {
+    display: none;
+    width: 38px; height: 38px;
+    flex-direction: column; align-items: center; justify-content: center; gap: 5px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .hamburger span {
+    display: block; width: 18px; height: 2px;
+    background: var(--text-primary);
+    border-radius: 2px; transition: all 0.3s;
+  }
+
+  /* Mobile menu */
+  .mobile-menu {
+    display: none;
+    position: fixed; top: var(--nav-h); left: 0; right: 0;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 1.5rem clamp(1rem, 4vw, 3rem);
+    z-index: 999;
+    flex-direction: column; gap: 1rem;
+    box-shadow: var(--shadow-lg);
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    text-decoration: none;
+    font-size: 1rem; font-weight: 500;
+    color: var(--text-secondary);
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .mobile-menu a:last-of-type { border-bottom: none; }
+  .mobile-menu .btn { width: 100%; justify-content: center; margin-top: 0.5rem; }
+
+  /* ---- SECTIONS ---- */
+  section { padding: clamp(4rem, 8vw, 8rem) clamp(1rem, 4vw, 3rem); }
+  .container { max-width: 1280px; margin: 0 auto; }
+
+  /* ---- HERO ---- */
+  #hero {
+    min-height: 100vh;
+    padding-top: calc(var(--nav-h) + clamp(3rem, 6vw, 6rem));
+    padding-bottom: clamp(3rem, 6vw, 6rem);
+    background: var(--surface);
+    position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 70% 50% at 80% 40%, rgba(76,175,80,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 60% at 20% 70%, rgba(0,168,150,0.06) 0%, transparent 55%),
+      radial-gradient(ellipse 40% 40% at 60% 10%, rgba(0,91,150,0.05) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  .hero-inner {
+    max-width: 1280px; margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: clamp(2rem, 5vw, 5rem);
+    position: relative; z-index: 1;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(76,175,80,0.1);
+    border: 1px solid rgba(76,175,80,0.25);
+    border-radius: 100px;
+    padding: 6px 14px;
+    font-size: 0.8rem; font-weight: 600;
+    color: var(--primary-green);
+    margin-bottom: 1.5rem;
+  }
+  .hero-badge::before { content: '●'; font-size: 0.5rem; }
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    line-height: 1.1;
+    color: var(--text-primary);
+    margin-bottom: 1.25rem;
+  }
+  h1 em { color: var(--primary-green); font-style: normal; }
+  .hero-sub {
+    font-size: clamp(1rem, 1.5vw, 1.125rem);
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    max-width: 520px;
+    line-height: 1.7;
+  }
+  .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 2.5rem; }
+  .hero-trust {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 0.8rem; color: var(--text-muted);
+  }
+  .trust-dots { display: flex; }
+  .trust-dots span {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--surface-2);
+    border: 2px solid var(--surface);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    margin-left: -6px;
+  }
+  .trust-dots span:first-child { margin-left: 0; }
+  .hero-visual {
+    display: flex; flex-direction: column; gap: 1rem;
+    position: relative;
+  }
+  .dashboard-preview {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+  }
+  .dp-header {
+    background: linear-gradient(135deg, #005B96 0%, #00A896 100%);
+    padding: 1.25rem 1.5rem;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .dp-header .user-info { display: flex; align-items: center; gap: 10px; }
+  .dp-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; color: #fff; font-weight: 600;
+  }
+  .dp-user-text h4 { color: #fff; font-size: 0.875rem; margin: 0; }
+  .dp-user-text p { color: rgba(255,255,255,0.7); font-size: 0.7rem; }
+  .dp-date { color: rgba(255,255,255,0.8); font-size: 0.75rem; }
+  .dp-body { padding: 1.25rem 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
+  .dp-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem; }
+  .dp-card {
+    background: var(--surface-2);
+    border-radius: var(--radius-sm);
+    padding: 0.875rem;
+    border: 1px solid var(--border);
+  }
+  .dp-card-label { font-size: 0.7rem; color: var(--text-muted); font-weight: 500; margin-bottom: 4px; }
+  .dp-card-value { font-size: 1.25rem; font-weight: 700; color: var(--text-primary); }
+  .dp-card-unit { font-size: 0.65rem; color: var(--text-muted); margin-top: 2px; }
+  .dp-card.green .dp-card-value { color: var(--primary-green); }
+  .dp-card.blue .dp-card-value { color: var(--primary-blue); }
+  .dp-card.teal .dp-card-value { color: var(--accent-teal); }
+  .streak-bar { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 0.875rem; }
+  .streak-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem; }
+  .streak-header h4 { font-size: 0.8rem; font-weight: 600; color: var(--text-primary); }
+  .streak-badge {
+    background: linear-gradient(135deg, var(--primary-green), var(--accent-teal));
+    color: #fff; font-size: 0.65rem; font-weight: 700;
+    padding: 3px 8px; border-radius: 100px;
+  }
+  .streak-days { display: flex; gap: 5px; }
+  .streak-day {
+    flex: 1; height: 28px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.6rem; font-weight: 600;
+  }
+  .streak-day.done { background: var(--primary-green); color: #fff; }
+  .streak-day.today { background: var(--accent-teal); color: #fff; box-shadow: 0 0 8px rgba(0,168,150,0.4); }
+  .streak-day.upcoming { background: var(--border); color: var(--text-muted); }
+  .float-card {
+    position: absolute;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.875rem 1rem;
+    box-shadow: var(--shadow-lg);
+    display: flex; align-items: center; gap: 10px;
+    font-size: 0.8rem;
+    min-width: 160px;
+    animation: float 3s ease-in-out infinite;
+  }
+  .float-card.card-1 { right: -20px; top: 30%; }
+  .float-card.card-2 { left: -20px; bottom: 20%; animation-delay: 1.5s; }
+  .float-icon { font-size: 1.5rem; }
+  .float-text { font-weight: 600; color: var(--text-primary); }
+  .float-sub { color: var(--text-muted); font-size: 0.7rem; }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  /* ---- STATS STRIP ---- */
+  #stats {
+    padding: 0;
+    background: linear-gradient(135deg, #005B96 0%, #00A896 100%);
+  }
+  .stats-inner {
+    max-width: 1280px; margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding: clamp(2rem, 4vw, 3rem) clamp(1rem, 4vw, 3rem);
+    gap: 1rem;
+  }
+  .stat-item { text-align: center; padding: 1rem; }
+  .stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+  .stat-label { color: rgba(255,255,255,0.75); font-size: 0.85rem; }
+  .stat-divider {
+    width: 1px; background: rgba(255,255,255,0.2);
+    height: 60px; align-self: center;
+    display: block;
+  }
+
+  /* ---- FEATURES ---- */
+  #features { background: var(--bg); }
+  .section-tag {
+    display: inline-block;
+    background: rgba(76,175,80,0.1);
+    color: var(--primary-green);
+    font-size: 0.75rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 5px 12px; border-radius: 100px;
+    margin-bottom: 1rem;
+  }
+  h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    color: var(--text-primary);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .section-sub {
+    font-size: clamp(0.9rem, 1.3vw, 1.05rem);
+    color: var(--text-secondary); max-width: 600px;
+    line-height: 1.7; margin-bottom: 3rem;
+  }
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .feature-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2rem;
+    transition: all 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .feature-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, transparent 60%, rgba(76,175,80,0.04) 100%);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .feature-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: rgba(76,175,80,0.2); }
+  .feature-card:hover::before { opacity: 1; }
+  .feature-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; margin-bottom: 1.25rem;
+  }
+  .feature-icon.green { background: rgba(76,175,80,0.1); }
+  .feature-icon.blue { background: rgba(0,91,150,0.1); }
+  .feature-icon.teal { background: rgba(0,168,150,0.1); }
+  .feature-card h3 {
+    font-size: 1.1rem; font-weight: 700;
+    color: var(--text-primary); margin-bottom: 0.6rem;
+  }
+  .feature-card p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.65; }
+  .feature-tag {
+    display: inline-block; margin-top: 1rem;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.7rem; font-weight: 600;
+    padding: 3px 10px; border-radius: 100px;
+  }
+
+  /* ---- HOW IT WORKS ---- */
+  #how { background: var(--surface); }
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    position: relative;
+  }
+  .steps-grid::before {
+    content: '';
+    position: absolute;
+    top: 32px; left: 10%; right: 10%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary-green), var(--accent-teal));
+    opacity: 0.2;
+  }
+  .step-item { text-align: center; position: relative; padding-top: 0.5rem; }
+  .step-num {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-green), var(--accent-teal));
+    color: #fff;
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.5rem;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1rem;
+    position: relative; z-index: 1;
+    box-shadow: 0 4px 20px rgba(76,175,80,0.3);
+  }
+  .step-item h3 { font-size: 1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem; }
+  .step-item p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
+
+  /* ---- STREAKS ---- */
+  #streaks { background: var(--bg); }
+  .streaks-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: center;
+  }
+  .streaks-visual { display: flex; flex-direction: column; gap: 1rem; }
+  .streak-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+  }
+  .streak-card-header {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 1.25rem;
+  }
+  .streak-icon { font-size: 1.75rem; }
+  .streak-card-header h3 { font-size: 1rem; font-weight: 700; color: var(--text-primary); }
+  .streak-card-header p { font-size: 0.8rem; color: var(--text-muted); }
+  .streak-progress { display: flex; flex-direction: column; gap: 0.75rem; }
+  .streak-item { display: flex; flex-direction: column; gap: 6px; }
+  .streak-item-top { display: flex; align-items: center; justify-content: space-between; }
+  .streak-item-label { font-size: 0.8rem; font-weight: 600; color: var(--text-secondary); }
+  .streak-item-val { font-size: 0.8rem; font-weight: 700; color: var(--text-primary); }
+  .progress-bar {
+    height: 8px; border-radius: 100px;
+    background: var(--surface-2); overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; border-radius: 100px;
+    background: linear-gradient(90deg, var(--primary-green), var(--accent-teal));
+    transition: width 1s ease;
+  }
+  .badges-row { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+  .badge-item {
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 1rem 1.25rem;
+    flex: 1; min-width: 80px;
+    text-align: center;
+  }
+  .badge-icon { font-size: 1.75rem; }
+  .badge-label { font-size: 0.7rem; font-weight: 600; color: var(--text-secondary); }
+  .badge-days { font-size: 0.65rem; color: var(--text-muted); }
+  .badge-item.earned { background: rgba(76,175,80,0.06); border-color: rgba(76,175,80,0.2); }
+  .streaks-content h2 { margin-bottom: 1rem; }
+
+  /* ---- PROFESSIONAL DASHBOARD ---- */
+  #professional { background: var(--surface); }
+  .pro-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: center;
+  }
+  .pro-preview {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+  }
+  .pro-topbar {
+    background: #1A2E1A;
+    padding: 1rem 1.5rem;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  [data-theme="dark"] .pro-topbar { background: #0D1B0D; }
+  .pro-topbar h3 { color: #fff; font-size: 0.9rem; font-weight: 600; }
+  .pro-badge-pro {
+    background: var(--primary-green);
+    color: #fff; font-size: 0.65rem; font-weight: 700;
+    padding: 3px 8px; border-radius: 100px;
+  }
+  .pro-sidebar-layout { display: flex; }
+  .pro-sidebar {
+    width: 160px; flex-shrink: 0;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    padding: 1rem;
+    display: flex; flex-direction: column; gap: 0.5rem;
+  }
+  .pro-nav-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 7px 10px; border-radius: 8px;
+    font-size: 0.75rem; font-weight: 500;
+    color: var(--text-secondary); cursor: pointer;
+    transition: all 0.2s;
+  }
+  .pro-nav-item:hover { background: var(--surface-2); }
+  .pro-nav-item.active { background: rgba(76,175,80,0.1); color: var(--primary-green); }
+  .pro-nav-icon { font-size: 1rem; }
+  .pro-content { flex: 1; padding: 1rem; overflow: hidden; }
+  .client-list { display: flex; flex-direction: column; gap: 0.6rem; }
+  .client-row {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px; padding: 0.7rem 1rem;
+    transition: all 0.2s;
+  }
+  .client-row:hover { border-color: rgba(76,175,80,0.3); }
+  .c-avatar {
+    width: 30px; height: 30px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.65rem; font-weight: 700; color: #fff;
+    flex-shrink: 0;
+  }
+  .c-name { font-size: 0.78rem; font-weight: 600; color: var(--text-primary); }
+  .c-meta { font-size: 0.65rem; color: var(--text-muted); }
+  .c-status {
+    margin-left: auto;
+    font-size: 0.65rem; font-weight: 600; padding: 3px 8px; border-radius: 100px;
+  }
+  .c-status.good { background: rgba(76,175,80,0.1); color: var(--primary-green); }
+  .c-status.caution { background: rgba(255,193,7,0.1); color: #B8860B; }
+  .c-status.alert { background: rgba(211,47,47,0.08); color: #D32F2F; }
+  .pro-features { display: flex; flex-direction: column; gap: 1.25rem; }
+  .pro-feature-item {
+    display: flex; gap: 1rem; align-items: flex-start;
+    padding: 1.25rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+  .pro-feature-icon {
+    width: 42px; height: 42px; border-radius: 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; flex-shrink: 0;
+  }
+  .pro-feature-text h4 { font-size: 0.95rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.3rem; }
+  .pro-feature-text p { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; }
+
+  /* ---- WHO ALIGNMENT ---- */
+  #who { background: var(--bg); }
+  .who-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .who-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    transition: all 0.3s;
+  }
+  .who-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+  .who-card-icon { font-size: 2rem; margin-bottom: 1rem; }
+  .who-card h3 { font-size: 1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem; }
+  .who-card p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
+  .who-source {
+    display: inline-flex; align-items: center; gap: 5px;
+    margin-top: 1rem;
+    font-size: 0.7rem; color: var(--primary-blue);
+    font-weight: 600;
+  }
+
+  /* ---- PRICING ---- */
+  #pricing { background: var(--surface); }
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    align-items: start;
+  }
+  .pricing-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2rem;
+    transition: all 0.3s;
+  }
+  .pricing-card.featured {
+    background: linear-gradient(160deg, #005B96 0%, #00A896 100%);
+    border-color: transparent;
+    transform: scale(1.03);
+    box-shadow: var(--shadow-lg);
+  }
+  .pricing-card:hover:not(.featured) { transform: translateY(-4px); box-shadow: var(--shadow); }
+  .plan-badge {
+    display: inline-block;
+    background: rgba(76,175,80,0.15);
+    color: var(--primary-green);
+    font-size: 0.7rem; font-weight: 700;
+    padding: 4px 10px; border-radius: 100px;
+    margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .featured .plan-badge { background: rgba(255,255,255,0.2); color: #fff; }
+  .plan-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.5rem; color: var(--text-primary);
+    margin-bottom: 0.5rem;
+  }
+  .featured .plan-name { color: #fff; }
+  .plan-price {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.8rem; color: var(--text-primary);
+    line-height: 1; margin-bottom: 0.5rem;
+  }
+  .plan-price sup { font-size: 1.2rem; vertical-align: super; }
+  .plan-price span { font-size: 1rem; font-family: 'Plus Jakarta Sans', sans-serif; color: var(--text-muted); font-weight: 400; }
+  .featured .plan-price, .featured .plan-price span { color: #fff; }
+  .plan-desc { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.6; }
+  .featured .plan-desc { color: rgba(255,255,255,0.8); }
+  .plan-features { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2rem; }
+  .plan-features li {
+    display: flex; align-items: flex-start; gap: 8px;
+    font-size: 0.85rem; color: var(--text-secondary);
+  }
+  .featured .plan-features li { color: rgba(255,255,255,0.85); }
+  .plan-features li::before {
+    content: '✓'; color: var(--primary-green);
+    font-weight: 700; flex-shrink: 0; margin-top: 1px;
+  }
+  .featured .plan-features li::before { color: #A5F3C0; }
+  .plan-cta { width: 100%; padding: 12px; justify-content: center; }
+  .featured .plan-cta {
+    background: #fff; color: #005B96;
+  }
+  .featured .plan-cta:hover { background: #f0f9ff; transform: translateY(-1px); }
+
+  /* ---- TESTIMONIALS ---- */
+  #testimonials { background: var(--bg); }
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .testimonial-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    display: flex; flex-direction: column; gap: 1rem;
+  }
+  .stars { color: #FFC107; font-size: 0.9rem; letter-spacing: 2px; }
+  .testimonial-text {
+    font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7;
+    font-style: italic;
+  }
+  .testimonial-author { display: flex; align-items: center; gap: 10px; margin-top: auto; }
+  .t-avatar {
+    width: 38px; height: 38px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.8rem; font-weight: 700; color: #fff;
+    flex-shrink: 0;
+  }
+  .t-name { font-size: 0.875rem; font-weight: 700; color: var(--text-primary); }
+  .t-role { font-size: 0.75rem; color: var(--text-muted); }
+
+  /* ---- CTA BANNER ---- */
+  #cta-banner {
+    padding: clamp(3rem, 6vw, 6rem) clamp(1rem, 4vw, 3rem);
+    background: linear-gradient(135deg, #003D66 0%, #005B96 40%, #00A896 100%);
+    position: relative; overflow: hidden;
+  }
+  #cta-banner::before {
+    content: '';
+    position: absolute;
+    top: -50%; right: -10%;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.03);
+    pointer-events: none;
+  }
+  .cta-inner {
+    max-width: 700px; margin: 0 auto;
+    text-align: center; position: relative; z-index: 1;
+  }
+  .cta-inner h2 { color: #fff; font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1rem; }
+  .cta-inner p { color: rgba(255,255,255,0.8); font-size: 1.05rem; margin-bottom: 2rem; line-height: 1.7; }
+  .cta-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-white { background: #fff; color: #005B96; }
+  .btn-white:hover { background: #f0f9ff; transform: translateY(-1px); }
+  .btn-ghost { background: transparent; border: 1.5px solid rgba(255,255,255,0.4); color: #fff; }
+  .btn-ghost:hover { background: rgba(255,255,255,0.1); }
+  .disclaimer {
+    margin-top: 1.5rem;
+    font-size: 0.75rem; color: rgba(255,255,255,0.55);
+    line-height: 1.6;
+  }
+
+  /* ---- FOOTER ---- */
+  footer {
+    background: #0D1B0D;
+    padding: clamp(3rem, 5vw, 5rem) clamp(1rem, 4vw, 3rem) 2rem;
+  }
+  .footer-inner { max-width: 1280px; margin: 0 auto; }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+  .footer-brand .logo-text { color: #E8F5E9; }
+  .footer-brand p {
+    font-size: 0.875rem; color: rgba(255,255,255,0.5);
+    margin-top: 1rem; line-height: 1.7; max-width: 300px;
+  }
+  .footer-social { display: flex; gap: 8px; margin-top: 1.25rem; }
+  .social-btn {
+    width: 36px; height: 36px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 14px; color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .social-btn:hover { background: rgba(76,175,80,0.2); border-color: var(--primary-green); color: var(--primary-green); }
+  .footer-col h4 {
+    font-size: 0.875rem; font-weight: 700;
+    color: #fff; margin-bottom: 1.25rem;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+  .footer-col ul li a {
+    text-decoration: none;
+    font-size: 0.85rem; color: rgba(255,255,255,0.5);
+    transition: color 0.2s;
+  }
+  .footer-col ul li a:hover { color: var(--primary-green); }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding-top: 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-bottom p { font-size: 0.8rem; color: rgba(255,255,255,0.4); }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { font-size: 0.8rem; color: rgba(255,255,255,0.4); text-decoration: none; }
+  .footer-links a:hover { color: rgba(255,255,255,0.7); }
+  .disclaimer-footer {
+    font-size: 0.75rem; color: rgba(255,255,255,0.3);
+    max-width: 800px; margin-top: 1rem; line-height: 1.6;
+  }
+
+  /* ---- RESPONSIVE ---- */
+  @media (max-width: 1024px) {
+    .features-grid { grid-template-columns: repeat(2, 1fr); }
+    .who-grid { grid-template-columns: repeat(2, 1fr); }
+    .pricing-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+    .pricing-card.featured { transform: none; }
+    .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .pro-sidebar { width: 130px; }
+  }
+
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-visual { display: none; }
+    .steps-grid { grid-template-columns: repeat(2, 1fr); }
+    .steps-grid::before { display: none; }
+    .streaks-layout { grid-template-columns: 1fr; }
+    .pro-layout { grid-template-columns: 1fr; }
+    .stats-inner { grid-template-columns: repeat(2, 1fr); }
+    .stat-divider { display: none; }
+  }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .nav-actions .btn-outline, .nav-actions .btn-primary { display: none; }
+    .hamburger { display: flex; }
+    .features-grid { grid-template-columns: 1fr; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .dp-row { grid-template-columns: 1fr 1fr; }
+    .pro-sidebar { display: none; }
+    .who-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .float-card { display: none; }
+    h1 { font-size: 2.2rem; }
+    h2 { font-size: 1.8rem; }
+  }
+
+  @media (max-width: 480px) {
+    .stats-inner { grid-template-columns: 1fr 1fr; }
+    .steps-grid { grid-template-columns: 1fr; }
+    .badges-row { grid-template-columns: repeat(2, 1fr); }
+    .footer-top { grid-template-columns: 1fr; }
+    .footer-bottom { flex-direction: column; align-items: flex-start; }
+    .hero-ctas { flex-direction: column; }
+    .hero-ctas .btn { width: 100%; justify-content: center; }
+    .cta-actions { flex-direction: column; }
+    .cta-actions .btn { width: 100%; justify-content: center; }
+    .dp-row { grid-template-columns: 1fr 1fr 1fr; }
+  }
+
+  /* ---- ANIMATION ---- */
+  .fade-in {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+  .fade-in-delay-1 { transition-delay: 0.1s; }
+  .fade-in-delay-2 { transition-delay: 0.2s; }
+  .fade-in-delay-3 { transition-delay: 0.3s; }
+
+  /* ---- MISC ---- */
+  .text-center { text-align: center; }
+  .text-center .section-sub { margin-left: auto; margin-right: auto; }
+  .mt-1 { margin-top: 0.5rem; }
+  .alert-box {
+    background: rgba(255,193,7,0.08);
+    border: 1px solid rgba(255,193,7,0.25);
+    border-radius: var(--radius-sm);
+    padding: 0.75rem 1rem;
+    display: flex; align-items: flex-start; gap: 8px;
+    font-size: 0.8rem; color: var(--text-secondary);
+    margin-top: 1rem;
+  }
+  .alert-box .alert-icon { font-size: 0.9rem; flex-shrink: 0; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo">
+      <div class="logo-icon">🌿</div>
+      <div class="logo-text">The <span>Nutri</span> Effect</div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#streaks">Streaks</a></li>
+      <li><a href="#professional">For Professionals</a></li>
+      <li><a href="#who">WHO Aligned</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme" id="theme-btn">🌙</button>
+      <a href="#" class="btn btn-outline">Sign in</a>
+      <a href="#" class="btn btn-primary">Get Started Free</a>
+      <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#features" onclick="closeMenu()">Features</a>
+  <a href="#streaks" onclick="closeMenu()">Healthy Streaks</a>
+  <a href="#professional" onclick="closeMenu()">For Professionals</a>
+  <a href="#who" onclick="closeMenu()">WHO Aligned</a>
+  <a href="#pricing" onclick="closeMenu()">Pricing</a>
+  <a href="#" class="btn btn-outline">Sign in</a>
+  <a href="#" class="btn btn-primary">Get Started Free</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-inner container">
+    <div class="hero-content">
+      <div class="hero-badge fade-in">WHO-Aligned Wellness Platform</div>
+      <h1 class="fade-in fade-in-delay-1">
+        Science-Backed <em>Wellness</em>,<br>Personalized for You
+      </h1>
+      <p class="hero-sub fade-in fade-in-delay-2">
+        The Nutri Effect combines AI-powered guidance with WHO evidence standards to help you build lasting health habits — from nutrition and hydration to activity and sleep, across every stage of life.
+      </p>
+      <div class="hero-ctas fade-in fade-in-delay-3">
+        <a href="#" class="btn btn-primary" style="padding:14px 28px; font-size:0.95rem;">Start for Free →</a>
+        <a href="#professional" class="btn btn-blue" style="padding:14px 28px; font-size:0.95rem;">For Professionals</a>
+      </div>
+      <div class="hero-trust fade-in fade-in-delay-3">
+        <div class="trust-dots">
+          <span>👤</span><span>👤</span><span>👤</span><span>👤</span>
+        </div>
+        <span>Trusted by 12,000+ users & dietitians worldwide</span>
+      </div>
+      <div class="alert-box fade-in">
+        <span class="alert-icon">ℹ️</span>
+        <span><strong>Medical Disclaimer:</strong> The Nutri Effect does not diagnose, treat, or replace professional medical care. Always consult a qualified healthcare provider for medical concerns.</span>
+      </div>
+    </div>
+
+    <div class="hero-visual fade-in fade-in-delay-2" style="position:relative;">
+      <div class="dashboard-preview">
+        <div class="dp-header">
+          <div class="user-info">
+            <div class="dp-avatar">SA</div>
+            <div class="dp-user-text">
+              <h4>Sarah Adeyemi</h4>
+              <p>Adult · Lagos, NG</p>
+            </div>
+          </div>
+          <span class="dp-date">Today, March 13</span>
+        </div>
+        <div class="dp-body">
+          <div class="dp-row">
+            <div class="dp-card green">
+              <div class="dp-card-label">BMI</div>
+              <div class="dp-card-value">22.4</div>
+              <div class="dp-card-unit">Normal range</div>
+            </div>
+            <div class="dp-card blue">
+              <div class="dp-card-label">Calories</div>
+              <div class="dp-card-value">1,840</div>
+              <div class="dp-card-unit">/ 2,100 kcal</div>
+            </div>
+            <div class="dp-card teal">
+              <div class="dp-card-label">Hydration</div>
+              <div class="dp-card-value">1.8L</div>
+              <div class="dp-card-unit">/ 2.5L target</div>
+            </div>
+          </div>
+          <div class="streak-bar">
+            <div class="streak-header">
+              <h4>🔥 Healthy Streak — Day 12</h4>
+              <span class="streak-badge">Level 2 Unlocked</span>
+            </div>
+            <div class="streak-days">
+              <div class="streak-day done">M</div>
+              <div class="streak-day done">T</div>
+              <div class="streak-day done">W</div>
+              <div class="streak-day done">T</div>
+              <div class="streak-day done">F</div>
+              <div class="streak-day today">S</div>
+              <div class="streak-day upcoming">S</div>
+            </div>
+          </div>
+          <div class="streak-item">
+            <div class="streak-item-top">
+              <span class="streak-item-label">Today's Protein Goal</span>
+              <span class="streak-item-val">68g / 80g</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" style="width:85%"></div></div>
+          </div>
+          <div class="streak-item">
+            <div class="streak-item-top">
+              <span class="streak-item-label">Fruits & Vegetables</span>
+              <span class="streak-item-val">3 / 5 servings</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" style="width:60%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="float-card card-1">
+        <span class="float-icon">🏆</span>
+        <div>
+          <div class="float-text">Badge Earned!</div>
+          <div class="float-sub">7-Day Consistency</div>
+        </div>
+      </div>
+      <div class="float-card card-2">
+        <span class="float-icon">🤖</span>
+        <div>
+          <div class="float-text">AI Insight</div>
+          <div class="float-sub">New meal plan ready</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div id="stats">
+  <div class="stats-inner">
+    <div class="stat-item fade-in">
+      <div class="stat-num">50K+</div>
+      <div class="stat-label">Active Users Globally</div>
+    </div>
+    <span class="stat-divider"></span>
+    <div class="stat-item fade-in fade-in-delay-1">
+      <div class="stat-num">96%</div>
+      <div class="stat-label">WHO Guideline Adherence</div>
+    </div>
+    <span class="stat-divider"></span>
+    <div class="stat-item fade-in fade-in-delay-2">
+      <div class="stat-num">180+</div>
+      <div class="stat-label">Countries Supported</div>
+    </div>
+    <span class="stat-divider"></span>
+    <div class="stat-item fade-in fade-in-delay-3">
+      <div class="stat-num">3.2M</div>
+      <div class="stat-label">Healthy Streaks Completed</div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="container">
+    <div class="text-center fade-in">
+      <span class="section-tag">Platform Features</span>
+      <h2>Everything You Need for<br>Preventive Wellness</h2>
+      <p class="section-sub">From AI-powered meal planning to structured risk screening, every tool is grounded in WHO evidence standards and designed for every life stage.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card fade-in">
+        <div class="feature-icon green">🧠</div>
+        <h3>AI-Powered Guidance Engine</h3>
+        <p>Our AI interprets WHO standards to generate personalized meal plans, calorie targets, hydration goals, and activity recommendations based on your unique profile — including age, sex, occupation, and life stage.</p>
+        <span class="feature-tag">WHO Framework</span>
+      </div>
+      <div class="feature-card fade-in fade-in-delay-1">
+        <div class="feature-icon blue">📊</div>
+        <h3>BMI & Growth Tracking</h3>
+        <p>Visualize your BMI trends over time against WHO classification bands. Supports pediatric z-score tracking and adult BMI standards, with non-diagnostic advisory alerts when thresholds are approached.</p>
+        <span class="feature-tag">Evidence-Based</span>
+      </div>
+      <div class="feature-card fade-in fade-in-delay-2">
+        <div class="feature-icon teal">🌍</div>
+        <h3>Location-Based Meal Plans</h3>
+        <p>Meal suggestions adapt to your geographic region using our FAO/INFOODS-mapped food database, ensuring cultural relevance and local availability while maintaining WHO nutritional benchmarks.</p>
+        <span class="feature-tag">Global Adaptability</span>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon green">💧</div>
+        <h3>Hydration & Nutrition Logging</h3>
+        <p>Track daily water intake, macronutrients, and dietary diversity with a streamlined logging interface. Get alerts for persistent deficits in protein, sodium overload, or insufficient fruit and vegetable servings.</p>
+        <span class="feature-tag">Daily Tracking</span>
+      </div>
+      <div class="feature-card fade-in fade-in-delay-1">
+        <div class="feature-icon blue">🔒</div>
+        <h3>Secure & Compliant</h3>
+        <p>Your data is protected with TLS 1.2+ encryption in transit and AES-256 at rest. GDPR-aware data storage, Argon2 password hashing, and RBAC-enforced role separation keep your wellness data private.</p>
+        <span class="feature-tag">HIPAA-Ready</span>
+      </div>
+      <div class="feature-card fade-in fade-in-delay-2">
+        <div class="feature-icon teal">🌙</div>
+        <h3>Light & Dark Mode</h3>
+        <p>Switch between calming light and dark themes that persist across sessions. Both modes maintain WCAG AA contrast compliance and use the platform's signature green and blue wellness palette.</p>
+        <span class="feature-tag">Accessible Design</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="container">
+    <div class="text-center fade-in">
+      <span class="section-tag">How It Works</span>
+      <h2>Your Wellness Journey<br>in 4 Simple Steps</h2>
+      <p class="section-sub">Getting started is effortless. Personalized, evidence-based guidance in minutes.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-item fade-in">
+        <div class="step-num">1</div>
+        <h3>Create Your Profile</h3>
+        <p>Register securely with email verification. Enter your age, sex, occupation, life stage, and location to unlock personalized recommendations.</p>
+      </div>
+      <div class="step-item fade-in fade-in-delay-1">
+        <div class="step-num">2</div>
+        <h3>AI Builds Your Plan</h3>
+        <p>Our WHO-aligned AI engine generates your personalized meal plan, hydration targets, and activity guidance based on your profile and local food availability.</p>
+      </div>
+      <div class="step-item fade-in fade-in-delay-2">
+        <div class="step-num">3</div>
+        <h3>Log & Track Daily</h3>
+        <p>Use the low-friction logging interface to record meals, water intake, and activity. The system screens your data against WHO thresholds nightly.</p>
+      </div>
+      <div class="step-item fade-in fade-in-delay-3">
+        <div class="step-num">4</div>
+        <h3>Build Lasting Habits</h3>
+        <p>Earn badges, maintain streaks, and receive weekly progress summaries via email. Celebrate milestones and build scientifically grounded habits for life.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HEALTHY STREAKS -->
+<section id="streaks">
+  <div class="container">
+    <div class="streaks-layout">
+      <div class="streaks-visual">
+        <div class="streak-card fade-in">
+          <div class="streak-card-header">
+            <span class="streak-icon">🔥</span>
+            <div>
+              <h3>Today's Habit Goals</h3>
+              <p>Day 12 of your streak — keep going!</p>
+            </div>
+          </div>
+          <div class="streak-progress">
+            <div class="streak-item">
+              <div class="streak-item-top">
+                <span class="streak-item-label">💧 Hydration</span>
+                <span class="streak-item-val">1.8L / 2.5L</span>
+              </div>
+              <div class="progress-bar"><div class="progress-fill" style="width:72%"></div></div>
+            </div>
+            <div class="streak-item">
+              <div class="streak-item-top">
+                <span class="streak-item-label">🥦 Fruits & Vegetables</span>
+                <span class="streak-item-val">3 / 5 servings</span>
+              </div>
+              <div class="progress-bar"><div class="progress-fill" style="width:60%"></div></div>
+            </div>
+            <div class="streak-item">
+              <div class="streak-item-top">
+                <span class="streak-item-label">🏃 Daily Movement</span>
+                <span class="streak-item-val">25 / 30 min</span>
+              </div>
+              <div class="progress-bar"><div class="progress-fill" style="width:83%"></div></div>
+            </div>
+            <div class="streak-item">
+              <div class="streak-item-top">
+                <span class="streak-item-label">🍽️ Balanced Meals</span>
+                <span class="streak-item-val">2 / 3 meals logged</span>
+              </div>
+              <div class="progress-bar"><div class="progress-fill" style="width:67%"></div></div>
+            </div>
+            <div class="streak-item">
+              <div class="streak-item-top">
+                <span class="streak-item-label">🚫 No Sugary Drinks</span>
+                <span class="streak-item-val">Goal Met ✓</span>
+              </div>
+              <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="badges-row fade-in fade-in-delay-1">
+          <div class="badge-item earned">
+            <span class="badge-icon">🥉</span>
+            <span class="badge-label">Consistency</span>
+            <span class="badge-days">3-Day Badge</span>
+          </div>
+          <div class="badge-item earned">
+            <span class="badge-icon">🥈</span>
+            <span class="badge-label">Weekly Award</span>
+            <span class="badge-days">7-Day Badge</span>
+          </div>
+          <div class="badge-item">
+            <span class="badge-icon">🥇</span>
+            <span class="badge-label">Milestone</span>
+            <span class="badge-days">30-Day Badge</span>
+          </div>
+          <div class="badge-item">
+            <span class="badge-icon">🏆</span>
+            <span class="badge-label">Champion</span>
+            <span class="badge-days">90-Day Badge</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="streaks-content fade-in fade-in-delay-1">
+        <span class="section-tag">Healthy Streaks</span>
+        <h2>Build Real Habits That Last</h2>
+        <p class="section-sub">
+          Science shows consistency beats intensity. Our Healthy Streaks system turns WHO-aligned wellness goals into daily challenges with real rewards — making sustainable habits genuinely fun.
+        </p>
+        <div style="display:flex; flex-direction:column; gap:1rem; margin-bottom:2rem;">
+          <div style="display:flex; gap:12px; align-items:flex-start; padding:1rem; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-sm);">
+            <span style="font-size:1.4rem; flex-shrink:0;">🎯</span>
+            <div>
+              <h4 style="font-size:0.9rem; font-weight:700; margin-bottom:0.25rem;">Measurable, WHO-Aligned Targets</h4>
+              <p style="font-size:0.82rem; color:var(--text-secondary);">Every challenge is grounded in evidence — daily hydration in litres, F&V servings per day, activity minutes, sleep timing, and more.</p>
+            </div>
+          </div>
+          <div style="display:flex; gap:12px; align-items:flex-start; padding:1rem; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-sm);">
+            <span style="font-size:1.4rem; flex-shrink:0;">📱</span>
+            <div>
+              <h4 style="font-size:0.9rem; font-weight:700; margin-bottom:0.25rem;">Apple Health & Google Fit Integration</h4>
+              <p style="font-size:0.82rem; color:var(--text-secondary);">Connect your wearable for automatic activity validation. Health data overrides manual input for objective metrics.</p>
+            </div>
+          </div>
+          <div style="display:flex; gap:12px; align-items:flex-start; padding:1rem; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-sm);">
+            <span style="font-size:1.4rem; flex-shrink:0;">✉️</span>
+            <div>
+              <h4 style="font-size:0.9rem; font-weight:700; margin-bottom:0.25rem;">Automated Email Milestones</h4>
+              <p style="font-size:0.82rem; color:var(--text-secondary);">Receive instant congratulatory emails for 7-day, 30-day, and 90-day achievements, plus weekly progress summaries.</p>
+            </div>
+          </div>
+        </div>
+        <a href="#" class="btn btn-primary" style="padding:14px 28px;">Start Your First Streak →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROFESSIONAL DASHBOARD -->
+<section id="professional">
+  <div class="container">
+    <div class="pro-layout">
+      <div>
+        <span class="section-tag fade-in">Professional Dashboard</span>
+        <h2 class="fade-in">Built for Dietitians &amp; Nutritionists</h2>
+        <p class="section-sub fade-in">A dedicated, RBAC-protected environment for managing client caseloads, tracking anthropometric progress, generating structured professional reports, and assigning personalized Healthy Streak challenges.</p>
+        <div class="pro-features fade-in">
+          <div class="pro-feature-item">
+            <div class="pro-feature-icon">👥</div>
+            <div class="pro-feature-text">
+              <h4>Client Management</h4>
+              <p>Onboard clients, input anthropometric baselines, and monitor multiple caseloads from a single consolidated dashboard.</p>
+            </div>
+          </div>
+          <div class="pro-feature-item">
+            <div class="pro-feature-icon">📈</div>
+            <div class="pro-feature-text">
+              <h4>Growth & BMI Monitoring</h4>
+              <p>Visualize pediatric z-scores against WHO growth reference charts and adult BMI trends with baseline-vs-current comparison views.</p>
+            </div>
+          </div>
+          <div class="pro-feature-item">
+            <div class="pro-feature-icon">📄</div>
+            <div class="pro-feature-text">
+              <h4>PDF & CSV Report Export</h4>
+              <p>Generate professionally formatted Initial Assessment, Follow-up, and Progress Evaluation reports. Export to PDF or raw CSV in seconds.</p>
+            </div>
+          </div>
+          <div class="pro-feature-item">
+            <div class="pro-feature-icon">🎯</div>
+            <div class="pro-feature-text">
+              <h4>Assign Healthy Streaks</h4>
+              <p>Customize and assign WHO-aligned habit challenges directly to clients — set hydration targets, F&V goals, activity minutes, and more.</p>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:2rem;" class="fade-in">
+          <a href="#" class="btn btn-blue" style="padding:14px 28px;">Request Professional Access →</a>
+        </div>
+      </div>
+
+      <div class="pro-preview fade-in fade-in-delay-1">
+        <div class="pro-topbar">
+          <h3>🩺 Professional Dashboard</h3>
+          <span class="pro-badge-pro">PRO</span>
+        </div>
+        <div class="pro-sidebar-layout">
+          <div class="pro-sidebar">
+            <div class="pro-nav-item active"><span class="pro-nav-icon">👥</span>Clients</div>
+            <div class="pro-nav-item"><span class="pro-nav-icon">📊</span>Reports</div>
+            <div class="pro-nav-item"><span class="pro-nav-icon">🎯</span>Streaks</div>
+            <div class="pro-nav-item"><span class="pro-nav-icon">🤖</span>AI Insights</div>
+            <div class="pro-nav-item"><span class="pro-nav-icon">⚙️</span>Settings</div>
+          </div>
+          <div class="pro-content">
+            <div style="font-size:0.7rem;font-weight:700;color:var(--text-muted);margin-bottom:0.75rem;text-transform:uppercase;letter-spacing:0.08em;">Active Clients (8)</div>
+            <div class="client-list">
+              <div class="client-row">
+                <div class="c-avatar" style="background:#005B96;">AO</div>
+                <div>
+                  <div class="c-name">Adeola Okonkwo</div>
+                  <div class="c-meta">Adult · F · Day 14</div>
+                </div>
+                <span class="c-status good">On Track</span>
+              </div>
+              <div class="client-row">
+                <div class="c-avatar" style="background:#00A896;">KM</div>
+                <div>
+                  <div class="c-name">Kwame Mensah</div>
+                  <div class="c-meta">Adult · M · Day 7</div>
+                </div>
+                <span class="c-status caution">Review</span>
+              </div>
+              <div class="client-row">
+                <div class="c-avatar" style="background:#4CAF50;">FN</div>
+                <div>
+                  <div class="c-name">Fatima Ndiaye</div>
+                  <div class="c-meta">Pregnancy · Day 3</div>
+                </div>
+                <span class="c-status good">On Track</span>
+              </div>
+              <div class="client-row">
+                <div class="c-avatar" style="background:#D32F2F;">TJ</div>
+                <div>
+                  <div class="c-name">Tunde Johnson</div>
+                  <div class="c-meta">Adult · M · Day 1</div>
+                </div>
+                <span class="c-status alert">Alert</span>
+              </div>
+              <div class="client-row">
+                <div class="c-avatar" style="background:#1976D2;">ZA</div>
+                <div>
+                  <div class="c-name">Zainab Ahmed</div>
+                  <div class="c-meta">Adolescent · F · Day 21</div>
+                </div>
+                <span class="c-status good">On Track</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO ALIGNMENT -->
+<section id="who">
+  <div class="container">
+    <div class="text-center fade-in">
+      <span class="section-tag">Evidence Framework</span>
+      <h2>Strictly WHO-Aligned Standards</h2>
+      <p class="section-sub">Every recommendation, threshold, and screening trigger is anchored to authoritative WHO governing documents. No independent overrides — ever.</p>
+    </div>
+    <div class="who-grid">
+      <div class="who-card fade-in">
+        <div class="who-card-icon">⚖️</div>
+        <h3>Adult BMI Classification</h3>
+        <p>BMI thresholds follow WHO TRS 894 standards. Underweight (&lt;18.5), normal, overweight (25–29.9), and obese (≥30) classifications trigger tiered advisory responses.</p>
+        <span class="who-source">📖 WHO TRS 894</span>
+      </div>
+      <div class="who-card fade-in fade-in-delay-1">
+        <div class="who-card-icon">👶</div>
+        <h3>Pediatric Growth Standards</h3>
+        <p>Children 5–19 years are monitored against WHO z-score growth references (2006/2007). Alerts are issued at z-score thresholds with consultation prompts for severe deviations.</p>
+        <span class="who-source">📖 WHO CGS 2006 · 2007</span>
+      </div>
+      <div class="who-card fade-in fade-in-delay-2">
+        <div class="who-card-icon">🥗</div>
+        <h3>Energy & Macronutrients</h3>
+        <p>Calorie and protein requirements follow the WHO/FAO/UNU Expert Consultation (2004) and TRS 935. Protein below 0.8g/kg/day for 7+ days triggers an advisory flag.</p>
+        <span class="who-source">📖 WHO/FAO/UNU 2004</span>
+      </div>
+      <div class="who-card fade-in">
+        <div class="who-card-icon">🏃</div>
+        <h3>Physical Activity Guidelines</h3>
+        <p>Activity recommendations for all life stages follow the WHO Guidelines on Physical Activity and Sedentary Behaviour (2020). Sedentary patterns trigger gentle intervention prompts.</p>
+        <span class="who-source">📖 WHO GPASB 2020</span>
+      </div>
+      <div class="who-card fade-in fade-in-delay-1">
+        <div class="who-card-icon">🫀</div>
+        <h3>Fats & Sugars Guidance</h3>
+        <p>Sugar and fat recommendations align with FAO/WHO Expert Consultation on Fats (2010) and the WHO Guideline on Sugars Intake (2015). Sugar-sweetened beverage reduction is a core streak goal.</p>
+        <span class="who-source">📖 WHO Sugars 2015</span>
+      </div>
+      <div class="who-card fade-in fade-in-delay-2">
+        <div class="who-card-icon">💊</div>
+        <h3>Micronutrient Requirements</h3>
+        <p>Vitamin and mineral benchmarks follow WHO/FAO Vitamin and Mineral Requirements in Human Nutrition (2nd Ed) with life-stage-specific adjustments for pregnancy, lactation, and older adults.</p>
+        <span class="who-source">📖 WHO/FAO VMR 2nd Ed.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="container">
+    <div class="text-center fade-in">
+      <span class="section-tag">Pricing</span>
+      <h2>Simple, Transparent Plans</h2>
+      <p class="section-sub">Choose the plan that matches your wellness journey. Upgrade or downgrade anytime.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="pricing-card fade-in">
+        <span class="plan-badge">Free First Month</span>
+        <div class="plan-name">Starter</div>
+        <div class="plan-price"><sup>$</sup>0<span>/first month</span></div>
+        <p class="plan-desc">Perfect for getting started with evidence-based wellness habits. Free for your first month.</p>
+        <ul class="plan-features">
+          <li>Personalized BMI tracking</li>
+          <li>Basic meal plan (WHO-aligned)</li>
+          <li>Hydration goal tracker</li>
+          <li>3 Healthy Streak challenges</li>
+          <li>Weekly email summary</li>
+          <li>Light & dark mode</li>
+        </ul>
+        <a href="#" class="btn btn-outline plan-cta">Get Started Free</a>
+      </div>
+      <div class="pricing-card featured fade-in fade-in-delay-1">
+        <span class="plan-badge">Most Popular</span>
+        <div class="plan-name">Wellness+</div>
+        <div class="plan-price"><sup>$</sup>8<span> lifetime</span></div>
+        <p class="plan-desc">Full AI personalization and unlimited habit tracking — yours forever with a single one-time payment.</p>
+        <ul class="plan-features">
+          <li>Everything in Starter</li>
+          <li>AI-personalized meal plans (localized)</li>
+          <li>Structured risk screening</li>
+          <li>Unlimited Healthy Streaks</li>
+          <li>Apple Health / Google Fit sync</li>
+          <li>Full badge & milestone system</li>
+          <li>Priority email support</li>
+        </ul>
+        <a href="#" class="btn plan-cta btn-white">Get Lifetime Access — $8</a>
+      </div>
+      <div class="pricing-card fade-in fade-in-delay-2">
+        <span class="plan-badge" style="background:rgba(0,91,150,0.1);color:#005B96;">Professional</span>
+        <div class="plan-name">Pro</div>
+        <div class="plan-price"><sup>$</sup>10<span> lifetime</span></div>
+        <p class="plan-desc">Complete client management suite for dietitians and nutritionists — one payment, lifetime access.</p>
+        <ul class="plan-features">
+          <li>Everything in Wellness+</li>
+          <li>Professional dashboard (RBAC)</li>
+          <li>Up to 50 managed clients</li>
+          <li>Anthropometric & growth monitoring</li>
+          <li>AI-assisted wellness insights</li>
+          <li>Assign Healthy Streaks to clients</li>
+          <li>PDF & CSV report export</li>
+          <li>Dedicated support</li>
+        </ul>
+        <a href="#" class="btn btn-blue plan-cta">Get Lifetime Access — $10</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="container">
+    <div class="text-center fade-in">
+      <span class="section-tag">Testimonials</span>
+      <h2>Trusted by Wellness Communities<br>Worldwide</h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card fade-in">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"The Nutri Effect transformed how I counsel clients. The WHO-aligned screening tools and professional reporting save me hours each week. The PDF export is beautifully formatted."</p>
+        <div class="testimonial-author">
+          <div class="t-avatar" style="background:#005B96;">DR</div>
+          <div>
+            <div class="t-name">Dr. Rosaline Eze</div>
+            <div class="t-role">Registered Dietitian · Lagos, Nigeria</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card fade-in fade-in-delay-1">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"I've tried dozens of nutrition apps. This is the first one that actually explains WHY — grounded in WHO evidence. The AI meal plans respect my local Nigerian ingredients."</p>
+        <div class="testimonial-author">
+          <div class="t-avatar" style="background:#4CAF50;">KO</div>
+          <div>
+            <div class="t-name">Kelechi Obi</div>
+            <div class="t-role">General User · Port Harcourt, Nigeria</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card fade-in fade-in-delay-2">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"My 30-day hydration streak badge genuinely made me proud. The Healthy Streaks system is addictive in the best possible way. I've never been so consistent."</p>
+        <div class="testimonial-author">
+          <div class="t-avatar" style="background:#00A896;">AM</div>
+          <div>
+            <div class="t-name">Amara Mensah</div>
+            <div class="t-role">General User · Accra, Ghana</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section id="cta-banner">
+  <div class="cta-inner">
+    <h2>Start Building Healthier<br>Habits Today</h2>
+    <p>Join thousands of users and nutrition professionals worldwide building scientifically grounded wellness habits — one streak at a time.</p>
+    <div class="cta-actions">
+      <a href="#" class="btn btn-white" style="padding:14px 28px; font-size:0.95rem;">Get Started Free →</a>
+      <a href="#professional" class="btn btn-ghost" style="padding:14px 28px; font-size:0.95rem;">For Professionals</a>
+    </div>
+    <p class="disclaimer">
+      ⚕️ The Nutri Effect is a preventive wellness platform. It does not diagnose, treat, cure, or replace professional medical advice. Always consult a qualified healthcare professional for health concerns. WHO guidelines are used for educational and wellness guidance purposes only.
+    </p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#" class="logo" style="margin-bottom:0.5rem; display:inline-flex;">
+          <div class="logo-icon">🌿</div>
+          <div class="logo-text" style="color:#E8F5E9;">The <span>Nutri</span> Effect</div>
+        </a>
+        <p>A globally scalable, AI-powered wellness platform aligned with WHO evidence standards. Empowering individuals and nutrition professionals to build safe, sustainable health habits across every stage of life.</p>
+        <div class="footer-social">
+          <a href="#" class="social-btn" title="Twitter">𝕏</a>
+          <a href="#" class="social-btn" title="LinkedIn">in</a>
+          <a href="#" class="social-btn" title="Instagram">📸</a>
+          <a href="#" class="social-btn" title="Facebook">f</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <ul>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#streaks">Healthy Streaks</a></li>
+          <li><a href="#professional">Professional Dashboard</a></li>
+          <li><a href="#who">WHO Alignment</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#">Educational Library</a></li>
+          <li><a href="#">WHO Guidelines</a></li>
+          <li><a href="#">Meal Plan Guide</a></li>
+          <li><a href="#">Activity Reference</a></li>
+          <li><a href="#">Blog</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 The Nutri Effect. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Cookies</a>
+        <a href="#">GDPR</a>
+      </div>
+    </div>
+    <p class="disclaimer-footer">
+      Medical Disclaimer: The Nutri Effect is not a medical device and does not provide medical advice, diagnosis, or treatment. All content is for general wellness and educational purposes only. Recommendations are based on WHO public health guidelines and are not a substitute for professional medical consultation. Users with specific health conditions should consult a qualified healthcare professional before making dietary or lifestyle changes.
+    </p>
+  </div>
+</footer>
+
+<script>
+  // Theme toggle
+  function toggleTheme() {
+    const html = document.documentElement;
+    const btn = document.getElementById('theme-btn');
+    if (html.getAttribute('data-theme') === 'light') {
+      html.setAttribute('data-theme', 'dark');
+      btn.textContent = '☀️';
+      localStorage.setItem('ne-theme', 'dark');
+    } else {
+      html.setAttribute('data-theme', 'light');
+      btn.textContent = '🌙';
+      localStorage.setItem('ne-theme', 'light');
+    }
+  }
+
+  // Persist theme
+  const saved = localStorage.getItem('ne-theme');
+  if (saved === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.getElementById('theme-btn').textContent = '☀️';
+  }
+
+  // Mobile menu
+  function toggleMenu() {
+    const m = document.getElementById('mobile-menu');
+    m.classList.toggle('open');
+  }
+  function closeMenu() {
+    document.getElementById('mobile-menu').classList.remove('open');
+  }
+
+  // Close menu on outside click
+  document.addEventListener('click', (e) => {
+    const menu = document.getElementById('mobile-menu');
+    const hamburger = document.querySelector('.hamburger');
+    if (!menu.contains(e.target) && !hamburger.contains(e.target)) {
+      menu.classList.remove('open');
+    }
+  });
+
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Smooth scroll for nav links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const href = a.getAttribute('href');
+      if (href.length > 1) {
+        const target = document.querySelector(href);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    });
+  });
+</script>
+</body>
+</html>
